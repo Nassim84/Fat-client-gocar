@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Manage Students</title>
+		<link rel="stylesheet" href="../styles/style.css" />
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="container">
+				<a href="#" class="navbar-brand">MyApp</a>
+				<ul class="navbar-nav">
+					<li><a href="admin-dashboard.html">Home</a></li>
+					<li><a href="students.html">Manage Students</a></li>
+					<li><a href="createUser.html">Add Mnually User's</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<h1>Manage Students</h1>
+			<table id="studentTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Firstname</th>
+						<th>Email</th>
+						<th>City</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<!-- Modal -->
+		<div id="editModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button">&times;</span>
+				<form id="editForm">
+					<h2>Edit Student</h2>
+					<input type="hidden" name="id" id="studentId" />
+					<label for="name">Name:</label>
+					<input type="text" name="name" id="studentName" required />
+					<label for="firstname">Firstname:</label>
+					<input type="text" name="firstname" id="studentFirstname" required />
+					<label for="email">Email:</label>
+					<input type="email" name="email" id="studentEmail" required />
+					<label for="campus">Campus:</label>
+					<input type="text" name="campus" id="studentCampus" required />
+					<button type="submit">Save</button>
+				</form>
+			</div>
+		</div>
+
+		<script src="../scripts/students.js"></script>
+	</body>
+</html>
