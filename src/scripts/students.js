@@ -1,17 +1,22 @@
 // scripts/students.js
 const axios = require("axios");
 
-async function getStudents() {
+let currentPage = 1;
+let totalPages = 1;
+
+async function getStudents(page = 1) {
 	try {
 		const response = await axios.get(
-			"http://localhost:3000/api/users/profiles",
+			`http://localhost:3000/api/users/profiles?page=${page}`,
 			{
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem("token")}`,
 				},
 			}
 		);
-		return response.data;
+		currentPage = response.data.currentPage;
+		totalPages = response.data.totalPages;
+		return response.data.users;
 	} catch (error) {
 		console.error("Error retrieving students:", error);
 		throw error;
@@ -29,7 +34,7 @@ async function updateStudent(studentId, updatedData) {
 				},
 			}
 		);
-		await renderStudents();
+		await renderStudents(currentPage);
 	} catch (error) {
 		console.error("Error updating student:", error);
 		throw error;
@@ -46,33 +51,40 @@ async function deleteStudent(studentId) {
 				},
 			}
 		);
-		await renderStudents();
+		await renderStudents(currentPage);
 	} catch (error) {
 		console.error("Error deleting student:", error);
 		throw error;
 	}
 }
 
-async function renderStudents() {
-	const students = await getStudents();
+async function renderStudents(page = 1) {
+	const students = await getStudents(page);
 	const tableBody = document.querySelector("#studentTable tbody");
 	tableBody.innerHTML = "";
 
 	students.forEach((student) => {
 		const row = document.createElement("tr");
 		row.innerHTML = `
-            <td>${student.id}</td>
-            <td>${student.name}</td>
-            <td>${student.firstname}</td>
-            <td>${student.email}</td>
-            <td>${student.campus}</td>
-            <td>
-                <button class="editButton" data-id="${student.id}">Edit</button>
-                <button class="deleteButton" data-id="${student.id}">Delete</button>
-            </td>
-        `;
+      <td>${student.id}</td>
+      <td>${student.name}</td>
+      <td>${student.firstname}</td>
+      <td>${student.email}</td>
+      <td>${student.campus}</td>
+      <td>
+        <button class="editButton" data-id="${student.id}">Edit</button>
+        <button class="deleteButton" data-id="${student.id}">Delete</button>
+      </td>
+    `;
 		tableBody.appendChild(row);
 	});
+
+	// Mettre à jour l'état des boutons de pagination
+	document.getElementById("prevButton").disabled = currentPage === 1;
+	document.getElementById("nextButton").disabled = currentPage === totalPages;
+	document.getElementById(
+		"pageInfo"
+	).textContent = `Page ${currentPage} sur ${totalPages}`;
 }
 
 document.addEventListener("click", async (event) => {
@@ -88,19 +100,31 @@ document.addEventListener("click", async (event) => {
 			await deleteStudent(studentId);
 		}
 	}
+
+	if (event.target.id === "prevButton") {
+		if (currentPage > 1) {
+			await renderStudents(currentPage - 1);
+		}
+	}
+
+	if (event.target.id === "nextButton") {
+		if (currentPage < totalPages) {
+			await renderStudents(currentPage + 1);
+		}
+	}
 });
 
 async function getStudentById(studentId) {
 	try {
 		const response = await axios.get(
-			"http://localhost:3000/api/users/profiles",
+			`http://localhost:3000/api/users/profiles?page=${currentPage}`,
 			{
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem("token")}`,
 				},
 			}
 		);
-		const students = response.data;
+		const students = response.data.users;
 		return students.find((student) => student.id === parseInt(studentId));
 	} catch (error) {
 		console.error("Error retrieving student:", error);

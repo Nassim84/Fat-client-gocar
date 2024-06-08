@@ -3,31 +3,42 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Create User</title>
-		<style>
-			/* Add your styles here */
-		</style>
+		<link rel="stylesheet" href="../styles/style.css" />
 	</head>
 	<body>
-		<h1>Create New User</h1>
-		<form id="createUserForm">
-			<label for="firstname">First Name:</label>
-			<input type="text" id="firstname" name="firstname" required /><br />
-			<label for="name">Last Name:</label>
-			<input type="text" id="name" name="name" required /><br />
-			<label for="email">Email:</label>
-			<input type="email" id="email" name="email" required /><br />
-			<label for="role">Role:</label>
-			<select id="role" name="role">
-				<option value="student">Student</option>
-				<option value="admin">Admin</option></select
-			><br />
-			<label for="campus">Campus:</label>
-			<select id="campus" name="campus">
-				<option value="Avignon">Avignon</option>
-				<option value="Pertuis">Pertuis</option></select
-			><br />
-			<button type="submit">Create User</button>
-		</form>
+		<nav class="navbar">
+			<div class="container">
+				<a href="#" class="navbar-brand">Gocar</a>
+				<ul class="navbar-nav">
+					<li><a href="admin-dashboard.html">Home</a></li>
+					<li><a href="students.html">Manage Students</a></li>
+					<li><a href="createUser.html">Add Manually User's</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<h1>Create New User</h1>
+			<form id="createUserForm">
+				<label for="firstname">First Name:</label>
+				<input type="text" id="firstname" name="firstname" required />
+				<label for="name">Last Name:</label>
+				<input type="text" id="name" name="name" required />
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" required />
+				<label for="role">Role:</label>
+				<select id="role" name="role">
+					<option value="student">Student</option>
+					<option value="admin">Admin</option>
+				</select>
+				<label for="campus">Campus:</label>
+				<select id="campus" name="campus">
+					<option value="Avignon">Avignon</option>
+					<option value="Pertuis">Pertuis</option>
+				</select>
+				<button type="submit">Create User</button>
+			</form>
+		</div>
 		<script src="../scripts/createUser.js"></script>
 	</body>
 </html>
