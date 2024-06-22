@@ -27,7 +27,7 @@ document
 			if (response.ok) {
 				const user = await response.json();
 				alert("User created successfully!");
-				// Optionally, redirect or update the UI
+				window.location.href = "students.html";
 			} else {
 				const error = await response.json();
 				alert(`Error: ${error.message}`);
